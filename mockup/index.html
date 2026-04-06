@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>숲속힐링캠프 - 자연 속 힐링 캠핑장</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        forest: { 50:'#f0f7f0', 100:'#d4ead4', 200:'#a8d5a8', 300:'#7cc07c', 400:'#4fa34f', 500:'#2d7d2d', 600:'#1e5e1e', 700:'#164516', 800:'#0f2e0f', 900:'#081908' },
+        earth: { 50:'#faf6f1', 100:'#f0e6d6', 200:'#e0ccad', 300:'#c9a97a', 400:'#b8905a', 500:'#9a7244', 600:'#7a5a36', 700:'#5c4329', 800:'#3e2d1c', 900:'#21170f' },
+        warm: { 50:'#fff9f0', 100:'#fff0db', 200:'#ffe0b8', 300:'#ffcc8a', 400:'#ffb85c', 500:'#ff9f2e', 600:'#e88a1a', 700:'#c27014', 800:'#9c580f', 900:'#76420b' }
+      }
+    }
+  }
+}
+</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+  * { font-family: 'Noto Sans KR', sans-serif; }
+  html { scroll-behavior: smooth; }
+  .hero-bg { background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.5) 100%), url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1920&q=80') center/cover; }
+  .glamping-bg { background: url('https://images.unsplash.com/photo-1533632359083-0185df1be3d8?w=800&q=80') center/cover; }
+  .caravan-bg { background: url('https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=800&q=80') center/cover; }
+  .auto-bg { background: url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=800&q=80') center/cover; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .nav-link { cursor: pointer; transition: all 0.2s; }
+  .nav-link:hover { color: #2d7d2d; }
+  .room-card { transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+  .room-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+  .addon-item { transition: all 0.2s; }
+  .addon-item.selected { border-color: #2d7d2d; background: #f0f7f0; }
+  .btn-primary { background: #2d7d2d; transition: all 0.2s; }
+  .btn-primary:hover { background: #1e5e1e; transform: translateY(-1px); }
+  .fade-in { animation: fadeIn 0.4s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .sticky-bar { backdrop-filter: blur(12px); background: rgba(255,255,255,0.92); }
+  input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; }
+</style>
+</head>
+<body class="bg-warm-50 text-gray-800">
+
+<!-- ==================== NAVIGATION ==================== -->
+<nav class="fixed top-0 w-full z-50 sticky-bar border-b border-earth-100 shadow-sm">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
+      <svg class="w-8 h-8 text-forest-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm0 2.8L19 12h-1v7h-4v-6H10v6H6v-7H5l7-7.2z"/></svg>
+      <span class="text-xl font-bold text-forest-700">숲속힐링캠프</span>
+    </div>
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+      <span class="nav-link" onclick="showPage('home')">홈</span>
+      <span class="nav-link" onclick="showPage('rooms')">객실안내</span>
+      <span class="nav-link" onclick="showPage('booking')">예약하기</span>
+      <span class="nav-link" onclick="showPage('info')">이용안내</span>
+      <span class="nav-link" onclick="showPage('admin')">관리자</span>
+    </div>
+    <button onclick="showPage('booking')" class="btn-primary text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md">예약하기</button>
+  </div>
+</nav>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div id="page-home" class="page active">
+  <!-- Hero -->
+  <section class="hero-bg h-screen flex items-center justify-center text-center text-white relative">
+    <div class="max-w-2xl px-4 fade-in">
+      <p class="text-warm-300 text-sm tracking-widest uppercase mb-4 font-medium">Healing in Nature</p>
+      <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">자연 속에서<br>진정한 힐링을</h1>
+      <p class="text-lg text-white/80 mb-10 leading-relaxed">강원도 깊은 숲 속, 도심에서 벗어나<br>별빛 아래 특별한 하루를 만나보세요</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="showPage('booking')" class="bg-forest-600 hover:bg-forest-700 text-white px-8 py-4 rounded-full text-lg font-bold shadow-lg transition-all hover:scale-105">객실 예약하기</button>
+        <button onclick="showPage('rooms')" class="border-2 border-white/60 hover:bg-white/20 text-white px-8 py-4 rounded-full text-lg font-medium transition-all">객실 둘러보기</button>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <p class="text-forest-600 font-semibold text-sm tracking-wider uppercase mb-2">Why Choose Us</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">숲속힐링캠프만의 특별함</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center p-8 rounded-2xl bg-warm-50 hover:shadow-lg transition-shadow">
+          <div class="w-16 h-16 bg-forest-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <svg class="w-8 h-8 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">프라이빗 글램핑</h3>
+          <p class="text-gray-500 leading-relaxed">독립된 공간에서 오롯이 나만의 시간을 즐기세요. 전 객실 개별 바베큐 데크 완비.</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-warm-50 hover:shadow-lg transition-shadow">
+          <div class="w-16 h-16 bg-forest-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <svg class="w-8 h-8 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">캠프파이어 존</h3>
+          <p class="text-gray-500 leading-relaxed">별빛 아래 따뜻한 모닥불과 함께하는 특별한 밤. 장작 무료 제공.</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-warm-50 hover:shadow-lg transition-shadow">
+          <div class="w-16 h-16 bg-forest-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <svg class="w-8 h-8 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3">자연 그대로</h3>
+          <p class="text-gray-500 leading-relaxed">30만평 천연림 속 산책로, 계곡, 야생화. 아이들의 자연 놀이터.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Room Preview -->
+  <section class="py-24 bg-earth-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <p class="text-forest-600 font-semibold text-sm tracking-wider uppercase mb-2">Accommodation</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">객실 안내</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="room-card rounded-2xl overflow-hidden bg-white shadow-md" onclick="showPage('rooms')">
+          <div class="glamping-bg h-56 relative">
+            <span class="absolute top-4 left-4 bg-forest-600 text-white text-xs font-bold px-3 py-1 rounded-full">BEST</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-1">글램핑 돔</h3>
+            <p class="text-gray-400 text-sm mb-3">기준 2인 / 최대 4인</p>
+            <div class="flex items-center gap-2 text-xs text-gray-500 mb-4">
+              <span class="bg-forest-50 text-forest-700 px-2 py-0.5 rounded">에어컨</span>
+              <span class="bg-forest-50 text-forest-700 px-2 py-0.5 rounded">화장실</span>
+              <span class="bg-forest-50 text-forest-700 px-2 py-0.5 rounded">바베큐</span>
+            </div>
+            <div class="flex items-end justify-between">
+              <div>
+                <span class="text-xs text-gray-400">비수기 주중</span>
+                <p class="text-2xl font-extrabold text-forest-700">89,000<span class="text-sm font-normal text-gray-400">원/박</span></p>
+              </div>
+              <span class="text-forest-600 text-sm font-medium">자세히 &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card rounded-2xl overflow-hidden bg-white shadow-md" onclick="showPage('rooms')">
+          <div class="caravan-bg h-56"></div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-1">카라반</h3>
+            <p class="text-gray-400 text-sm mb-3">기준 2인 / 최대 4인</p>
+            <div class="flex items-center gap-2 text-xs text-gray-500 mb-4">
+              <span class="bg-forest-50 text-forest-700 px-2 py-0.5 rounded">에어컨</span>
+              <span class="bg-forest-50 text-forest-700 px-2 py-0.5 rounded">취사</span>
+              <span class="bg-forest-50 text-forest-700 px-2 py-0.5 rounded">TV</span>
+            </div>
+            <div class="flex items-end justify-between">
+              <div>
+                <span class="text-xs text-gray-400">비수기 주중</span>
+                <p class="text-2xl font-extrabold text-forest-700">120,000<span class="text-sm font-normal text-gray-400">원/박</span></p>
+              </div>
+              <span class="text-forest-600 text-sm font-medium">자세히 &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="room-card rounded-2xl overflow-hidden bg-white shadow-md" onclick="showPage('rooms')">
+          <div class="auto-bg h-56"></div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-1">오토캠핑 사이트</h3>
+            <p class="text-gray-400 text-sm mb-3">기준 4인 / 최대 6인</p>
+            <div class="flex items-center gap-2 text-xs text-gray-500 mb-4">
+              <span class="bg-forest-50 text-forest-700 px-2 py-0.5 rounded">전기</span>
+              <span class="bg-forest-50 text-forest-700 px-2 py-0.5 rounded">온수</span>
+              <span class="bg-forest-50 text-forest-700 px-2 py-0.5 rounded">주차</span>
+            </div>
+            <div class="flex items-end justify-between">
+              <div>
+                <span class="text-xs text-gray-400">비수기 주중</span>
+                <p class="text-2xl font-extrabold text-forest-700">45,000<span class="text-sm font-normal text-gray-400">원/박</span></p>
+              </div>
+              <span class="text-forest-600 text-sm font-medium">자세히 &rarr;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Review -->
+  <section class="py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <p class="text-forest-600 font-semibold text-sm tracking-wider uppercase mb-2">Reviews</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">이용 후기</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-warm-50 rounded-2xl p-8 text-left">
+          <div class="flex text-warm-500 mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="text-gray-600 leading-relaxed mb-4">"아이들이 정말 좋아했어요! 돔 글램핑이 너무 예쁘고, 바베큐 그릴도 깨끗하게 관리되어 있어서 만족스러웠습니다. 다음에 또 올게요!"</p>
+          <p class="text-sm font-semibold text-gray-800">김미영 <span class="text-gray-400 font-normal">/ 글램핑 돔 이용</span></p>
+        </div>
+        <div class="bg-warm-50 rounded-2xl p-8 text-left">
+          <div class="flex text-warm-500 mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="text-gray-600 leading-relaxed mb-4">"카라반이 호텔급이에요. 에어컨, TV, 취사시설까지 완비되어 있어서 편하게 캠핑 즐겼습니다. 주변 산책로도 최고!"</p>
+          <p class="text-sm font-semibold text-gray-800">이준호 <span class="text-gray-400 font-normal">/ 카라반 이용</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 bg-forest-700 text-white text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-4">특별한 하루를 예약하세요</h2>
+      <p class="text-forest-200 mb-8">성수기 객실은 빠르게 마감됩니다. 지금 바로 예약하세요.</p>
+      <button onclick="showPage('booking')" class="bg-white text-forest-700 px-10 py-4 rounded-full text-lg font-bold hover:bg-warm-100 transition-all hover:scale-105 shadow-lg">지금 예약하기</button>
+    </div>
+  </section>
+</div>
+
+<!-- ==================== ROOMS PAGE ==================== -->
+<div id="page-rooms" class="page pt-20">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-2">객실 안내</h1>
+    <p class="text-gray-500 mb-10">자연과 함께하는 다양한 숙소를 만나보세요</p>
+
+    <!-- Glamping Detail -->
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-8 fade-in">
+      <div class="md:flex">
+        <div class="glamping-bg md:w-1/2 h-72 md:h-auto"></div>
+        <div class="p-8 md:w-1/2">
+          <span class="bg-forest-100 text-forest-700 text-xs font-bold px-3 py-1 rounded-full">GLAMPING</span>
+          <h2 class="text-2xl font-bold mt-3 mb-2">글램핑 돔</h2>
+          <p class="text-gray-500 leading-relaxed mb-5">투명 돔 천장을 통해 별을 바라보며 잠드는 특별한 경험. 퀸사이즈 침대, 전용 화장실, 개별 바베큐 데크가 갖춰져 있습니다.</p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="bg-earth-50 text-earth-600 text-xs px-3 py-1 rounded-full">기준 2인 / 최대 4인</span>
+            <span class="bg-earth-50 text-earth-600 text-xs px-3 py-1 rounded-full">33m&sup2;</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">WiFi</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">에어컨</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">전용 화장실</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">바베큐 데크</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">퀸베드</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">냉장고</span>
+          </div>
+          <table class="w-full text-sm mb-6">
+            <thead><tr class="text-left text-gray-400 border-b"><th class="pb-2">시즌</th><th class="pb-2">주중</th><th class="pb-2">주말(금,토)</th></tr></thead>
+            <tbody>
+              <tr class="border-b"><td class="py-2 font-medium">비수기</td><td>89,000원</td><td>129,000원</td></tr>
+              <tr><td class="py-2 font-medium">성수기</td><td>149,000원</td><td>199,000원</td></tr>
+            </tbody>
+          </table>
+          <button onclick="showPage('booking')" class="btn-primary text-white px-6 py-3 rounded-full font-semibold w-full">이 객실 예약하기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Caravan -->
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-8 fade-in">
+      <div class="md:flex">
+        <div class="caravan-bg md:w-1/2 h-72 md:h-auto"></div>
+        <div class="p-8 md:w-1/2">
+          <span class="bg-earth-100 text-earth-700 text-xs font-bold px-3 py-1 rounded-full">CARAVAN</span>
+          <h2 class="text-2xl font-bold mt-3 mb-2">카라반</h2>
+          <p class="text-gray-500 leading-relaxed mb-5">호텔급 시설을 갖춘 프리미엄 카라반. 에어컨, TV, 취사시설, 전용 화장실 완비. 비 오는 날에도 편안한 캠핑을 즐기세요.</p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="bg-earth-50 text-earth-600 text-xs px-3 py-1 rounded-full">기준 2인 / 최대 4인</span>
+            <span class="bg-earth-50 text-earth-600 text-xs px-3 py-1 rounded-full">26m&sup2;</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">에어컨</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">TV</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">취사시설</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">전용 화장실</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">냉장고</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">주차</span>
+          </div>
+          <table class="w-full text-sm mb-6">
+            <thead><tr class="text-left text-gray-400 border-b"><th class="pb-2">시즌</th><th class="pb-2">주중</th><th class="pb-2">주말(금,토)</th></tr></thead>
+            <tbody>
+              <tr class="border-b"><td class="py-2 font-medium">비수기</td><td>120,000원</td><td>160,000원</td></tr>
+              <tr><td class="py-2 font-medium">성수기</td><td>180,000원</td><td>250,000원</td></tr>
+            </tbody>
+          </table>
+          <button onclick="showPage('booking')" class="btn-primary text-white px-6 py-3 rounded-full font-semibold w-full">이 객실 예약하기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auto Camping -->
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-8 fade-in">
+      <div class="md:flex">
+        <div class="auto-bg md:w-1/2 h-72 md:h-auto"></div>
+        <div class="p-8 md:w-1/2">
+          <span class="bg-warm-100 text-warm-700 text-xs font-bold px-3 py-1 rounded-full">AUTO CAMPING</span>
+          <h2 class="text-2xl font-bold mt-3 mb-2">오토캠핑 사이트</h2>
+          <p class="text-gray-500 leading-relaxed mb-5">넓은 사이트에 차량을 바로 대고 캠핑을 즐기세요. 전기, 온수, 개수대 완비. 반려동물 동반 가능.</p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="bg-earth-50 text-earth-600 text-xs px-3 py-1 rounded-full">기준 4인 / 최대 6인</span>
+            <span class="bg-earth-50 text-earth-600 text-xs px-3 py-1 rounded-full">50m&sup2;</span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">전기</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">온수</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">개수대</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">주차</span>
+            <span class="bg-forest-50 text-forest-700 text-xs px-2 py-1 rounded">반려동물</span>
+          </div>
+          <table class="w-full text-sm mb-6">
+            <thead><tr class="text-left text-gray-400 border-b"><th class="pb-2">시즌</th><th class="pb-2">주중</th><th class="pb-2">주말(금,토)</th></tr></thead>
+            <tbody>
+              <tr class="border-b"><td class="py-2 font-medium">비수기</td><td>45,000원</td><td>65,000원</td></tr>
+              <tr><td class="py-2 font-medium">성수기</td><td>75,000원</td><td>99,000원</td></tr>
+            </tbody>
+          </table>
+          <button onclick="showPage('booking')" class="btn-primary text-white px-6 py-3 rounded-full font-semibold w-full">이 객실 예약하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== BOOKING PAGE ==================== -->
+<div id="page-booking" class="page pt-20">
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-2">예약하기</h1>
+    <p class="text-gray-500 mb-10">날짜와 객실을 선택하고 부대시설을 추가하세요</p>
+
+    <!-- Step Indicator -->
+    <div class="flex items-center justify-center mb-12">
+      <div id="step1-dot" class="w-10 h-10 rounded-full bg-forest-600 text-white flex items-center justify-center font-bold text-sm">1</div>
+      <div class="w-16 h-0.5 bg-gray-200"><div id="step1-bar" class="h-full bg-forest-600 transition-all" style="width:0%"></div></div>
+      <div id="step2-dot" class="w-10 h-10 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-bold text-sm">2</div>
+      <div class="w-16 h-0.5 bg-gray-200"><div id="step2-bar" class="h-full bg-forest-600 transition-all" style="width:0%"></div></div>
+      <div id="step3-dot" class="w-10 h-10 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-bold text-sm">3</div>
+      <div class="w-16 h-0.5 bg-gray-200"><div id="step3-bar" class="h-full bg-forest-600 transition-all" style="width:0%"></div></div>
+      <div id="step4-dot" class="w-10 h-10 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-bold text-sm">4</div>
+    </div>
+
+    <!-- Step 1: Date -->
+    <div id="booking-step1" class="fade-in">
+      <div class="bg-white rounded-2xl shadow-md p-8 mb-6">
+        <h2 class="text-xl font-bold mb-6">1. 날짜 선택</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-2">체크인</label>
+            <input type="date" value="2026-07-10" class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-forest-300 focus:border-forest-400 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-2">체크아웃</label>
+            <input type="date" value="2026-07-12" class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-forest-300 focus:border-forest-400 outline-none">
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6 mt-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-2">성인</label>
+            <select class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none">
+              <option>2명</option><option>3명</option><option>4명</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-2">아동</label>
+            <select class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none">
+              <option>0명</option><option>1명</option><option>2명</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button onclick="goStep(2)" class="btn-primary text-white w-full py-4 rounded-xl font-bold text-lg">다음: 객실 선택</button>
+    </div>
+
+    <!-- Step 2: Room Select -->
+    <div id="booking-step2" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow-md p-8 mb-6">
+        <h2 class="text-xl font-bold mb-2">2. 객실 선택</h2>
+        <p class="text-gray-400 text-sm mb-6">2026.07.10 (금) ~ 07.12 (일) | 2박 | 성인 2명</p>
+        <div class="space-y-4">
+          <label class="block border-2 border-gray-200 rounded-xl p-5 cursor-pointer hover:border-forest-400 transition-colors has-[:checked]:border-forest-600 has-[:checked]:bg-forest-50">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <input type="radio" name="room" checked class="w-5 h-5 text-forest-600 accent-forest-600">
+                <div>
+                  <h3 class="font-bold">글램핑 돔 A</h3>
+                  <p class="text-sm text-gray-400">기준 2인 | WiFi, 에어컨, 화장실, 바베큐</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="text-xl font-extrabold text-forest-700">258,000원</p>
+                <p class="text-xs text-gray-400">129,000원 x 2박</p>
+              </div>
+            </div>
+          </label>
+          <label class="block border-2 border-gray-200 rounded-xl p-5 cursor-pointer hover:border-forest-400 transition-colors has-[:checked]:border-forest-600 has-[:checked]:bg-forest-50">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <input type="radio" name="room" class="w-5 h-5 text-forest-600 accent-forest-600">
+                <div>
+                  <h3 class="font-bold">카라반 B</h3>
+                  <p class="text-sm text-gray-400">기준 2인 | 에어컨, TV, 취사, 화장실</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="text-xl font-extrabold text-forest-700">320,000원</p>
+                <p class="text-xs text-gray-400">160,000원 x 2박</p>
+              </div>
+            </div>
+          </label>
+          <div class="border-2 border-gray-100 rounded-xl p-5 opacity-50">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <input type="radio" name="room" disabled class="w-5 h-5">
+                <div>
+                  <h3 class="font-bold text-gray-400">글램핑 돔 C</h3>
+                  <p class="text-sm text-gray-300">기준 2인 | WiFi, 에어컨, 화장실, 바베큐</p>
+                </div>
+              </div>
+              <span class="bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full">예약마감</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button onclick="goStep(1)" class="border border-gray-300 text-gray-600 px-6 py-4 rounded-xl font-medium flex-shrink-0">이전</button>
+        <button onclick="goStep(3)" class="btn-primary text-white flex-1 py-4 rounded-xl font-bold text-lg">다음: 부대시설 선택</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Add-ons -->
+    <div id="booking-step3" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow-md p-8 mb-6">
+        <h2 class="text-xl font-bold mb-2">3. 부대시설 선택 <span class="text-sm font-normal text-gray-400">(선택사항)</span></h2>
+        <p class="text-gray-400 text-sm mb-6">필요한 장비와 서비스를 추가하세요</p>
+        <div class="space-y-3">
+          <div class="addon-item border-2 border-gray-200 rounded-xl p-4 cursor-pointer flex items-center justify-between" onclick="toggleAddon(this, 15000)">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-warm-100 rounded-xl flex items-center justify-center text-2xl">&#x1F525;</div>
+              <div>
+                <h3 class="font-bold text-sm">바베큐 그릴 세트</h3>
+                <p class="text-xs text-gray-400">그릴 + 집게 + 석쇠 (1세트)</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-bold text-forest-700">15,000원</p>
+              <p class="text-xs text-gray-400">건당</p>
+            </div>
+          </div>
+          <div class="addon-item border-2 border-gray-200 rounded-xl p-4 cursor-pointer flex items-center justify-between" onclick="toggleAddon(this, 10000)">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-warm-100 rounded-xl flex items-center justify-center text-2xl">&#x1FAB5;</div>
+              <div>
+                <h3 class="font-bold text-sm">장작 세트</h3>
+                <p class="text-xs text-gray-400">참나무 장작 5kg + 착화제</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-bold text-forest-700">10,000원</p>
+              <p class="text-xs text-gray-400">건당</p>
+            </div>
+          </div>
+          <div class="addon-item border-2 border-gray-200 rounded-xl p-4 cursor-pointer flex items-center justify-between" onclick="toggleAddon(this, 20000)">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-warm-100 rounded-xl flex items-center justify-center text-2xl">&#x1F3D5;</div>
+              <div>
+                <h3 class="font-bold text-sm">화로대 대여</h3>
+                <p class="text-xs text-gray-400">화로대 + 불멍 테이블</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-bold text-forest-700">20,000원</p>
+              <p class="text-xs text-gray-400">박당</p>
+            </div>
+          </div>
+          <div class="addon-item border-2 border-gray-200 rounded-xl p-4 cursor-pointer flex items-center justify-between" onclick="toggleAddon(this, 35000)">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-warm-100 rounded-xl flex items-center justify-center text-2xl">&#x1F969;</div>
+              <div>
+                <h3 class="font-bold text-sm">BBQ 밀키트 (2인)</h3>
+                <p class="text-xs text-gray-400">소고기 + 삼겹살 + 소시지 + 야채</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-bold text-forest-700">35,000원</p>
+              <p class="text-xs text-gray-400">인당</p>
+            </div>
+          </div>
+          <div class="addon-item border-2 border-gray-200 rounded-xl p-4 cursor-pointer flex items-center justify-between" onclick="toggleAddon(this, 5000)">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-warm-100 rounded-xl flex items-center justify-center text-2xl">&#x1F9CA;</div>
+              <div>
+                <h3 class="font-bold text-sm">얼음 + 아이스박스</h3>
+                <p class="text-xs text-gray-400">아이스박스 대여 + 얼음 2kg</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-bold text-forest-700">5,000원</p>
+              <p class="text-xs text-gray-400">건당</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button onclick="goStep(2)" class="border border-gray-300 text-gray-600 px-6 py-4 rounded-xl font-medium flex-shrink-0">이전</button>
+        <button onclick="goStep(4)" class="btn-primary text-white flex-1 py-4 rounded-xl font-bold text-lg">다음: 예약 확인</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Confirmation -->
+    <div id="booking-step4" class="hidden fade-in">
+      <div class="bg-white rounded-2xl shadow-md p-8 mb-6">
+        <h2 class="text-xl font-bold mb-6">4. 예약 확인</h2>
+        <div class="space-y-4">
+          <div class="flex justify-between py-3 border-b border-gray-100">
+            <span class="text-gray-500">객실</span>
+            <span class="font-bold">글램핑 돔 A</span>
+          </div>
+          <div class="flex justify-between py-3 border-b border-gray-100">
+            <span class="text-gray-500">일정</span>
+            <span class="font-medium">2026.07.10(금) ~ 07.12(일) / 2박</span>
+          </div>
+          <div class="flex justify-between py-3 border-b border-gray-100">
+            <span class="text-gray-500">인원</span>
+            <span class="font-medium">성인 2명</span>
+          </div>
+          <div class="flex justify-between py-3 border-b border-gray-100">
+            <span class="text-gray-500">객실 요금</span>
+            <span class="font-medium">258,000원</span>
+          </div>
+          <div id="addon-summary" class="py-3 border-b border-gray-100">
+            <div class="flex justify-between">
+              <span class="text-gray-500">부대시설</span>
+              <span id="addon-total-display" class="font-medium">0원</span>
+            </div>
+          </div>
+          <div class="flex justify-between py-4">
+            <span class="text-lg font-bold">총 결제금액</span>
+            <span id="grand-total" class="text-2xl font-extrabold text-forest-700">258,000원</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md p-8 mb-6">
+        <h3 class="font-bold mb-4">예약자 정보</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-1">이름</label>
+            <input type="text" placeholder="홍길동" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-forest-300">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-1">연락처</label>
+            <input type="tel" placeholder="010-1234-5678" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-forest-300">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-600 mb-1">차량번호</label>
+            <input type="text" placeholder="12가 3456" class="w-full border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-forest-300">
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="goStep(3)" class="border border-gray-300 text-gray-600 px-6 py-4 rounded-xl font-medium flex-shrink-0">이전</button>
+        <button onclick="showConfirmModal()" class="btn-primary text-white flex-1 py-4 rounded-xl font-bold text-lg">결제하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== INFO PAGE ==================== -->
+<div id="page-info" class="page pt-20">
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-10">이용안내</h1>
+    <div class="space-y-6">
+      <div class="bg-white rounded-2xl shadow-md p-8">
+        <h2 class="text-xl font-bold mb-4">&#x1F55B; 입퇴실 시간</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-forest-50 rounded-xl p-4"><span class="font-bold text-forest-700">체크인</span> 오후 3:00</div>
+          <div class="bg-warm-50 rounded-xl p-4"><span class="font-bold text-warm-700">체크아웃</span> 오전 11:00</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-md p-8">
+        <h2 class="text-xl font-bold mb-4">&#x1F4B0; 환불 규정</h2>
+        <table class="w-full text-sm">
+          <thead><tr class="text-left border-b text-gray-400"><th class="pb-2">취소 시점</th><th class="pb-2">환불율</th></tr></thead>
+          <tbody>
+            <tr class="border-b"><td class="py-2">8일 전까지</td><td class="text-forest-700 font-bold">100% 환불</td></tr>
+            <tr class="border-b"><td class="py-2">5~7일 전</td><td>70% 환불</td></tr>
+            <tr class="border-b"><td class="py-2">3~4일 전</td><td>50% 환불</td></tr>
+            <tr class="border-b"><td class="py-2">2일 전</td><td>30% 환불</td></tr>
+            <tr><td class="py-2">1일 전 ~ 당일</td><td class="text-red-500 font-bold">환불 불가</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bg-white rounded-2xl shadow-md p-8">
+        <h2 class="text-xl font-bold mb-4">&#x1F4CD; 오시는 길</h2>
+        <div class="bg-gray-100 rounded-xl h-64 flex items-center justify-center text-gray-400 mb-4">
+          <span>카카오맵 / 네이버맵 (실제 연동 시 표시)</span>
+        </div>
+        <p class="text-gray-600"><strong>주소:</strong> 강원도 홍천군 내면 광원리 123-45</p>
+        <p class="text-gray-500 text-sm mt-2">서울에서 약 2시간 30분 (영동고속도로 → 홍천IC)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN PAGE ==================== -->
+<div id="page-admin" class="page pt-20">
+  <div class="flex min-h-screen">
+    <!-- Admin Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white p-6 hidden md:block flex-shrink-0">
+      <div class="flex items-center gap-2 mb-10">
+        <svg class="w-7 h-7 text-forest-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2z"/></svg>
+        <span class="font-bold text-lg">관리자</span>
+      </div>
+      <nav id="admin-nav" class="space-y-1">
+        <a onclick="showAdminTab('dashboard')" class="admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm cursor-pointer" data-tab="dashboard">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1"/></svg>
+          대시보드</a>
+        <a onclick="showAdminTab('reservations')" class="admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm cursor-pointer" data-tab="reservations">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          예약 관리</a>
+        <a onclick="showAdminTab('sites')" class="admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm cursor-pointer" data-tab="sites">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          객실 관리</a>
+        <a onclick="showAdminTab('addons')" class="admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm cursor-pointer" data-tab="addons">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          부대시설</a>
+        <a onclick="showAdminTab('customers')" class="admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm cursor-pointer" data-tab="customers">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          고객 관리</a>
+        <a onclick="showAdminTab('reviews')" class="admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm cursor-pointer" data-tab="reviews">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+          리뷰 관리</a>
+      </nav>
+      <div class="mt-10 pt-6 border-t border-gray-700">
+        <a onclick="showPage('home')" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-500 hover:text-white hover:bg-white/5 text-sm cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          사이트로 이동</a>
+      </div>
+    </aside>
+
+    <!-- Admin Content Area -->
+    <main class="flex-1 p-8 bg-gray-50 min-h-screen">
+
+      <!-- TAB: Dashboard -->
+      <div id="admin-dashboard" class="admin-tab fade-in">
+        <div class="mb-8"><h1 class="text-2xl font-bold text-gray-900">대시보드</h1><p class="text-gray-500 text-sm">2026년 7월 10일 (금)</p></div>
+        <div class="grid md:grid-cols-4 gap-4 mb-8">
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100"><p class="text-sm text-gray-500 mb-1">오늘 입실</p><p class="text-3xl font-extrabold text-forest-700">5</p><p class="text-xs text-gray-400 mt-1">팀</p></div>
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100"><p class="text-sm text-gray-500 mb-1">오늘 퇴실</p><p class="text-3xl font-extrabold text-warm-600">3</p><p class="text-xs text-gray-400 mt-1">팀</p></div>
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100"><p class="text-sm text-gray-500 mb-1">현재 입실률</p><p class="text-3xl font-extrabold text-forest-700">87%</p><div class="w-full bg-gray-100 rounded-full h-2 mt-2"><div class="bg-forest-500 h-2 rounded-full" style="width:87%"></div></div></div>
+          <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100"><p class="text-sm text-gray-500 mb-1">이번 달 매출</p><p class="text-3xl font-extrabold text-gray-900">12.8M</p><p class="text-xs text-green-500 font-medium mt-1">+23% vs 지난달</p></div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div class="flex items-center justify-between mb-4"><h2 class="font-bold text-lg">최근 예약</h2><span onclick="showAdminTab('reservations')" class="text-forest-600 text-sm font-medium cursor-pointer hover:underline">전체 보기 &rarr;</span></div>
+          <table class="w-full text-sm">
+            <thead><tr class="text-left text-gray-400 border-b"><th class="pb-3">예약번호</th><th class="pb-3">고객명</th><th class="pb-3">객실</th><th class="pb-3">일정</th><th class="pb-3">금액</th><th class="pb-3">상태</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-gray-50 hover:bg-gray-50 cursor-pointer"><td class="py-3 font-mono text-xs text-gray-500">RSV-20260710-001</td><td class="py-3 font-medium">김민수</td><td class="py-3">글램핑 돔 A</td><td class="py-3">07.10~07.12</td><td class="py-3 font-medium">258,000</td><td class="py-3"><span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">확정</span></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50 cursor-pointer"><td class="py-3 font-mono text-xs text-gray-500">RSV-20260710-002</td><td class="py-3 font-medium">이수진</td><td class="py-3">카라반 B</td><td class="py-3">07.11~07.13</td><td class="py-3 font-medium">320,000</td><td class="py-3"><span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">확정</span></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50 cursor-pointer"><td class="py-3 font-mono text-xs text-gray-500">RSV-20260710-003</td><td class="py-3 font-medium">박지훈</td><td class="py-3">오토캠핑 C</td><td class="py-3">07.10~07.11</td><td class="py-3 font-medium">65,000</td><td class="py-3"><span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-2 py-0.5 rounded-full">대기</span></td></tr>
+              <tr class="hover:bg-gray-50 cursor-pointer"><td class="py-3 font-mono text-xs text-gray-500">RSV-20260709-015</td><td class="py-3 font-medium">최유나</td><td class="py-3">글램핑 돔 B</td><td class="py-3">07.09~07.10</td><td class="py-3 font-medium">149,000</td><td class="py-3"><span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded-full">취소</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: Reservations -->
+      <div id="admin-reservations" class="admin-tab hidden fade-in">
+        <div class="flex items-center justify-between mb-8">
+          <div><h1 class="text-2xl font-bold text-gray-900">예약 관리</h1><p class="text-gray-500 text-sm">전체 예약 목록</p></div>
+          <button class="bg-forest-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-forest-700">+ 수동 예약 추가</button>
+        </div>
+        <div class="flex gap-3 mb-6">
+          <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none"><option>전체 상태</option><option>확정</option><option>대기</option><option>취소</option></select>
+          <select class="border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none"><option>전체 객실</option><option>글램핑 돔</option><option>카라반</option><option>오토캠핑</option></select>
+          <input type="text" placeholder="고객명/예약번호 검색" class="border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none flex-1">
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead><tr class="text-left text-gray-400 bg-gray-50 border-b"><th class="px-6 py-3">예약번호</th><th class="py-3">고객명</th><th class="py-3">연락처</th><th class="py-3">객실</th><th class="py-3">체크인</th><th class="py-3">체크아웃</th><th class="py-3">금액</th><th class="py-3">부대시설</th><th class="py-3">상태</th><th class="py-3">관리</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-gray-50 hover:bg-blue-50/30"><td class="px-6 py-4 font-mono text-xs text-gray-500">RSV-20260710-001</td><td class="py-4 font-medium">김민수</td><td class="py-4 text-gray-500">010-1234-****</td><td class="py-4">글램핑 돔 A</td><td class="py-4">07.10</td><td class="py-4">07.12</td><td class="py-4 font-medium">283,000</td><td class="py-4 text-xs text-gray-400">그릴, 장작</td><td class="py-4"><span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">확정</span></td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">상세</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-blue-50/30"><td class="px-6 py-4 font-mono text-xs text-gray-500">RSV-20260710-002</td><td class="py-4 font-medium">이수진</td><td class="py-4 text-gray-500">010-5678-****</td><td class="py-4">카라반 B</td><td class="py-4">07.11</td><td class="py-4">07.13</td><td class="py-4 font-medium">355,000</td><td class="py-4 text-xs text-gray-400">BBQ 밀키트</td><td class="py-4"><span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">확정</span></td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">상세</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-blue-50/30"><td class="px-6 py-4 font-mono text-xs text-gray-500">RSV-20260710-003</td><td class="py-4 font-medium">박지훈</td><td class="py-4 text-gray-500">010-9012-****</td><td class="py-4">오토캠핑 C</td><td class="py-4">07.10</td><td class="py-4">07.11</td><td class="py-4 font-medium">85,000</td><td class="py-4 text-xs text-gray-400">화로대</td><td class="py-4"><span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-2 py-0.5 rounded-full">대기</span></td><td class="py-4"><button class="text-xs text-blue-600 hover:underline">확정</button> <button class="text-xs text-red-500 hover:underline ml-2">취소</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-blue-50/30"><td class="px-6 py-4 font-mono text-xs text-gray-500">RSV-20260709-015</td><td class="py-4 font-medium">최유나</td><td class="py-4 text-gray-500">010-3456-****</td><td class="py-4">글램핑 돔 B</td><td class="py-4">07.09</td><td class="py-4">07.10</td><td class="py-4 font-medium line-through text-gray-400">149,000</td><td class="py-4 text-xs text-gray-400">-</td><td class="py-4"><span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded-full">취소</span></td><td class="py-4"><button class="text-xs text-gray-400">상세</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-blue-50/30"><td class="px-6 py-4 font-mono text-xs text-gray-500">RSV-20260708-012</td><td class="py-4 font-medium">정하영</td><td class="py-4 text-gray-500">010-7890-****</td><td class="py-4">글램핑 돔 C</td><td class="py-4">07.12</td><td class="py-4">07.14</td><td class="py-4 font-medium">318,000</td><td class="py-4 text-xs text-gray-400">그릴, 밀키트x2</td><td class="py-4"><span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">확정</span></td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">상세</button></td></tr>
+              <tr class="hover:bg-blue-50/30"><td class="px-6 py-4 font-mono text-xs text-gray-500">RSV-20260708-011</td><td class="py-4 font-medium">윤서연</td><td class="py-4 text-gray-500">010-2345-****</td><td class="py-4">오토캠핑 A</td><td class="py-4">07.11</td><td class="py-4">07.12</td><td class="py-4 font-medium">65,000</td><td class="py-4 text-xs text-gray-400">얼음</td><td class="py-4"><span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">확정</span></td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">상세</button></td></tr>
+            </tbody>
+          </table>
+          <div class="px-6 py-4 bg-gray-50 text-sm text-gray-500 flex justify-between items-center border-t">
+            <span>총 42건 중 1-6 표시</span>
+            <div class="flex gap-1"><button class="px-3 py-1 rounded bg-forest-600 text-white text-xs">1</button><button class="px-3 py-1 rounded bg-white border text-xs hover:bg-gray-50">2</button><button class="px-3 py-1 rounded bg-white border text-xs hover:bg-gray-50">3</button><button class="px-3 py-1 rounded bg-white border text-xs hover:bg-gray-50">&rarr;</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Sites -->
+      <div id="admin-sites" class="admin-tab hidden fade-in">
+        <div class="flex items-center justify-between mb-8">
+          <div><h1 class="text-2xl font-bold text-gray-900">객실 관리</h1><p class="text-gray-500 text-sm">등록된 객실 3개</p></div>
+          <button class="bg-forest-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-forest-700">+ 새 객실 등록</button>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+            <div class="glamping-bg h-40 relative"><span class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">활성</span></div>
+            <div class="p-5">
+              <h3 class="font-bold mb-1">글램핑 돔</h3>
+              <p class="text-xs text-gray-400 mb-3">기준 2인 / 최대 4인 | 33m&sup2;</p>
+              <div class="flex flex-wrap gap-1 mb-3"><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">WiFi</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">에어컨</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">화장실</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">바베큐</span></div>
+              <div class="text-sm mb-3"><span class="text-gray-400">비수기 주중</span> <span class="font-bold">89,000원</span> / <span class="text-gray-400">성수기 주말</span> <span class="font-bold">199,000원</span></div>
+              <div class="flex gap-2"><button class="flex-1 border border-forest-600 text-forest-600 px-3 py-2 rounded-lg text-xs font-medium hover:bg-forest-50">수정</button><button class="flex-1 border border-red-300 text-red-500 px-3 py-2 rounded-lg text-xs font-medium hover:bg-red-50">삭제</button></div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+            <div class="caravan-bg h-40 relative"><span class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">활성</span></div>
+            <div class="p-5">
+              <h3 class="font-bold mb-1">카라반</h3>
+              <p class="text-xs text-gray-400 mb-3">기준 2인 / 최대 4인 | 26m&sup2;</p>
+              <div class="flex flex-wrap gap-1 mb-3"><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">에어컨</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">TV</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">취사</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">화장실</span></div>
+              <div class="text-sm mb-3"><span class="text-gray-400">비수기 주중</span> <span class="font-bold">120,000원</span> / <span class="text-gray-400">성수기 주말</span> <span class="font-bold">250,000원</span></div>
+              <div class="flex gap-2"><button class="flex-1 border border-forest-600 text-forest-600 px-3 py-2 rounded-lg text-xs font-medium hover:bg-forest-50">수정</button><button class="flex-1 border border-red-300 text-red-500 px-3 py-2 rounded-lg text-xs font-medium hover:bg-red-50">삭제</button></div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+            <div class="auto-bg h-40 relative"><span class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">활성</span></div>
+            <div class="p-5">
+              <h3 class="font-bold mb-1">오토캠핑 사이트</h3>
+              <p class="text-xs text-gray-400 mb-3">기준 4인 / 최대 6인 | 50m&sup2;</p>
+              <div class="flex flex-wrap gap-1 mb-3"><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">전기</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">온수</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">주차</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">반려동물</span></div>
+              <div class="text-sm mb-3"><span class="text-gray-400">비수기 주중</span> <span class="font-bold">45,000원</span> / <span class="text-gray-400">성수기 주말</span> <span class="font-bold">99,000원</span></div>
+              <div class="flex gap-2"><button class="flex-1 border border-forest-600 text-forest-600 px-3 py-2 rounded-lg text-xs font-medium hover:bg-forest-50">수정</button><button class="flex-1 border border-red-300 text-red-500 px-3 py-2 rounded-lg text-xs font-medium hover:bg-red-50">삭제</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Addons -->
+      <div id="admin-addons" class="admin-tab hidden fade-in">
+        <div class="flex items-center justify-between mb-8">
+          <div><h1 class="text-2xl font-bold text-gray-900">부대시설 관리</h1><p class="text-gray-500 text-sm">등록된 부대시설 5개</p></div>
+          <button class="bg-forest-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-forest-700">+ 새 부대시설 등록</button>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead><tr class="text-left text-gray-400 bg-gray-50 border-b"><th class="px-6 py-3">항목</th><th class="py-3">카테고리</th><th class="py-3">가격</th><th class="py-3">가격유형</th><th class="py-3">일일 최대수량</th><th class="py-3">활성화</th><th class="py-3">관리</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-gray-50 hover:bg-gray-50"><td class="px-6 py-4 font-medium flex items-center gap-3"><span class="text-xl">&#x1F525;</span> 바베큐 그릴 세트</td><td class="py-4 text-gray-500">장비대여</td><td class="py-4 font-medium">15,000원</td><td class="py-4"><span class="bg-blue-50 text-blue-600 text-xs px-2 py-0.5 rounded">건당</span></td><td class="py-4">10</td><td class="py-4"><div class="w-10 h-6 bg-forest-500 rounded-full relative cursor-pointer"><div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow"></div></div></td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">수정</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50"><td class="px-6 py-4 font-medium flex items-center gap-3"><span class="text-xl">&#x1FAB5;</span> 장작 세트</td><td class="py-4 text-gray-500">소모품</td><td class="py-4 font-medium">10,000원</td><td class="py-4"><span class="bg-blue-50 text-blue-600 text-xs px-2 py-0.5 rounded">건당</span></td><td class="py-4">20</td><td class="py-4"><div class="w-10 h-6 bg-forest-500 rounded-full relative cursor-pointer"><div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow"></div></div></td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">수정</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50"><td class="px-6 py-4 font-medium flex items-center gap-3"><span class="text-xl">&#x1F3D5;</span> 화로대 대여</td><td class="py-4 text-gray-500">장비대여</td><td class="py-4 font-medium">20,000원</td><td class="py-4"><span class="bg-purple-50 text-purple-600 text-xs px-2 py-0.5 rounded">박당</span></td><td class="py-4">8</td><td class="py-4"><div class="w-10 h-6 bg-forest-500 rounded-full relative cursor-pointer"><div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow"></div></div></td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">수정</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50"><td class="px-6 py-4 font-medium flex items-center gap-3"><span class="text-xl">&#x1F969;</span> BBQ 밀키트 (2인)</td><td class="py-4 text-gray-500">식재료</td><td class="py-4 font-medium">35,000원</td><td class="py-4"><span class="bg-orange-50 text-orange-600 text-xs px-2 py-0.5 rounded">인당</span></td><td class="py-4">15</td><td class="py-4"><div class="w-10 h-6 bg-forest-500 rounded-full relative cursor-pointer"><div class="w-4 h-4 bg-white rounded-full absolute right-1 top-1 shadow"></div></div></td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">수정</button></td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium flex items-center gap-3 text-gray-400"><span class="text-xl">&#x1F9CA;</span> <span class="line-through">얼음+아이스박스</span></td><td class="py-4 text-gray-400">소모품</td><td class="py-4 text-gray-400">5,000원</td><td class="py-4"><span class="bg-gray-100 text-gray-400 text-xs px-2 py-0.5 rounded">건당</span></td><td class="py-4 text-gray-400">30</td><td class="py-4"><div class="w-10 h-6 bg-gray-300 rounded-full relative cursor-pointer"><div class="w-4 h-4 bg-white rounded-full absolute left-1 top-1 shadow"></div></div></td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">수정</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: Customers -->
+      <div id="admin-customers" class="admin-tab hidden fade-in">
+        <div class="flex items-center justify-between mb-8">
+          <div><h1 class="text-2xl font-bold text-gray-900">고객 관리</h1><p class="text-gray-500 text-sm">총 128명</p></div>
+          <input type="text" placeholder="이름/전화번호 검색" class="border border-gray-200 rounded-lg px-4 py-2 text-sm outline-none w-64">
+        </div>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead><tr class="text-left text-gray-400 bg-gray-50 border-b"><th class="px-6 py-3">고객명</th><th class="py-3">연락처</th><th class="py-3">예약 횟수</th><th class="py-3">총 결제액</th><th class="py-3">최근 방문</th><th class="py-3">관리</th></tr></thead>
+            <tbody>
+              <tr class="border-b border-gray-50 hover:bg-gray-50"><td class="px-6 py-4 font-medium">김민수</td><td class="py-4 text-gray-500">010-1234-5678</td><td class="py-4"><span class="bg-forest-50 text-forest-700 text-xs font-bold px-2 py-0.5 rounded-full">5회</span></td><td class="py-4 font-medium">1,290,000원</td><td class="py-4 text-gray-500">2026.07.10</td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">이력 보기</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50"><td class="px-6 py-4 font-medium">이수진</td><td class="py-4 text-gray-500">010-5678-9012</td><td class="py-4"><span class="bg-forest-50 text-forest-700 text-xs font-bold px-2 py-0.5 rounded-full">3회</span></td><td class="py-4 font-medium">860,000원</td><td class="py-4 text-gray-500">2026.07.11</td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">이력 보기</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50"><td class="px-6 py-4 font-medium">박지훈</td><td class="py-4 text-gray-500">010-9012-3456</td><td class="py-4"><span class="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-0.5 rounded-full">1회</span></td><td class="py-4 font-medium">85,000원</td><td class="py-4 text-gray-500">2026.07.10</td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">이력 보기</button></td></tr>
+              <tr class="border-b border-gray-50 hover:bg-gray-50"><td class="px-6 py-4 font-medium">정하영</td><td class="py-4 text-gray-500">010-7890-1234</td><td class="py-4"><span class="bg-forest-50 text-forest-700 text-xs font-bold px-2 py-0.5 rounded-full">4회</span></td><td class="py-4 font-medium">1,058,000원</td><td class="py-4 text-gray-500">2026.07.12</td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">이력 보기</button></td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-6 py-4 font-medium">윤서연</td><td class="py-4 text-gray-500">010-2345-6789</td><td class="py-4"><span class="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-0.5 rounded-full">2회</span></td><td class="py-4 font-medium">195,000원</td><td class="py-4 text-gray-500">2026.07.11</td><td class="py-4"><button class="text-xs text-forest-600 hover:underline">이력 보기</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: Reviews -->
+      <div id="admin-reviews" class="admin-tab hidden fade-in">
+        <div class="mb-8"><h1 class="text-2xl font-bold text-gray-900">리뷰 관리</h1><p class="text-gray-500 text-sm">총 89개 리뷰 | 평균 4.7점</p></div>
+        <div class="space-y-4">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <div class="flex items-center gap-2 mb-1"><span class="font-bold">김민수</span><span class="text-warm-500 text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="text-xs text-gray-400">2026.07.12</span></div>
+                <span class="bg-forest-50 text-forest-700 text-xs px-2 py-0.5 rounded">글램핑 돔 A</span>
+              </div>
+              <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">답변완료</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-3">"아이들이 정말 좋아했어요! 돔 글램핑이 너무 예쁘고, 바베큐 그릴도 깨끗하게 관리되어 있어서 만족스러웠습니다. 다음에 또 올게요!"</p>
+            <div class="bg-forest-50 rounded-lg p-4 border-l-4 border-forest-400">
+              <p class="text-xs text-forest-700 font-medium mb-1">관리자 답변</p>
+              <p class="text-sm text-forest-800">"김민수님, 따뜻한 후기 감사합니다! 아이들이 즐거워했다니 저희도 기쁩니다. 다음 방문 시에도 최선을 다하겠습니다 :)"</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <div class="flex items-center gap-2 mb-1"><span class="font-bold">이수진</span><span class="text-warm-500 text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="text-xs text-gray-400">2026.07.13</span></div>
+                <span class="bg-earth-50 text-earth-700 text-xs px-2 py-0.5 rounded">카라반 B</span>
+              </div>
+              <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">답변완료</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-3">"카라반이 호텔급이에요. 에어컨, TV, 취사시설까지 완비되어 있어서 편하게 캠핑 즐겼습니다."</p>
+            <div class="bg-forest-50 rounded-lg p-4 border-l-4 border-forest-400">
+              <p class="text-xs text-forest-700 font-medium mb-1">관리자 답변</p>
+              <p class="text-sm text-forest-800">"이수진님, 카라반을 편안하게 이용해주셔서 감사합니다! 또 놀러오세요 :)"</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm border border-yellow-200 p-6">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <div class="flex items-center gap-2 mb-1"><span class="font-bold">박지훈</span><span class="text-warm-500 text-sm">&#9733;&#9733;&#9733;&#9733;<span class="text-gray-300">&#9733;</span></span><span class="text-xs text-gray-400">2026.07.11</span></div>
+                <span class="bg-warm-50 text-warm-700 text-xs px-2 py-0.5 rounded">오토캠핑 C</span>
+              </div>
+              <span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-2 py-0.5 rounded-full">답변 필요</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-3">"전반적으로 좋았는데 화장실이 좀 멀었어요. 사이트 근처에 간이 화장실이 있으면 좋겠습니다."</p>
+            <button class="bg-forest-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-forest-700">답변 작성</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ==================== CONFIRM MODAL ==================== -->
+<div id="confirm-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4" style="display:none;">
+  <div class="bg-white rounded-2xl max-w-md w-full p-8 text-center fade-in">
+    <div class="w-20 h-20 bg-forest-100 rounded-full flex items-center justify-center mx-auto mb-5">
+      <svg class="w-10 h-10 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <h2 class="text-2xl font-bold mb-2">예약이 완료되었습니다!</h2>
+    <p class="text-gray-500 mb-6">예약번호: <span class="font-mono font-bold text-forest-700">RSV-20260710-004</span></p>
+    <p class="text-sm text-gray-400 mb-8">예약 확인 문자가 발송됩니다.<br>예약번호와 전화번호로 예약 조회가 가능합니다.</p>
+    <button onclick="closeModal()" class="btn-primary text-white w-full py-3 rounded-xl font-bold">확인</button>
+  </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-gray-900 text-gray-400 py-12">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid md:grid-cols-3 gap-8 mb-8">
+      <div>
+        <h3 class="text-white font-bold mb-3">숲속힐링캠프</h3>
+        <p class="text-sm leading-relaxed">강원도 홍천군 내면 광원리 123-45<br>대표: 홍길동 | 사업자등록번호: 123-45-67890</p>
+      </div>
+      <div>
+        <h3 class="text-white font-bold mb-3">연락처</h3>
+        <p class="text-sm">전화: 033-123-4567<br>카카오톡: @숲속힐링캠프<br>이메일: hello@forestcamp.kr</p>
+      </div>
+      <div>
+        <h3 class="text-white font-bold mb-3">이용시간</h3>
+        <p class="text-sm">체크인: 오후 3:00<br>체크아웃: 오전 11:00<br>사무실: 09:00 ~ 22:00</p>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 pt-6 text-center text-xs text-gray-500">
+      &copy; 2026 숲속힐링캠프. All rights reserved. | <span class="cursor-pointer hover:text-gray-300">개인정보처리방침</span> | <span class="cursor-pointer hover:text-gray-300">이용약관</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+let addonTotal = 0;
+const basePrice = 258000;
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (page === 'booking') goStep(1);
+  if (page === 'admin') showAdminTab('dashboard');
+}
+
+function showAdminTab(tab) {
+  // Show admin page if not active
+  if (!document.getElementById('page-admin').classList.contains('active')) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-admin').classList.add('active');
+  }
+  // Hide all admin tabs, show selected
+  document.querySelectorAll('.admin-tab').forEach(t => { t.classList.add('hidden'); t.classList.remove('fade-in'); });
+  const target = document.getElementById('admin-' + tab);
+  if (target) { target.classList.remove('hidden'); target.classList.add('fade-in'); }
+  // Update sidebar active state
+  document.querySelectorAll('.admin-nav-item').forEach(a => {
+    if (a.dataset.tab === tab) {
+      a.className = 'admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg bg-forest-700/30 text-forest-300 font-medium text-sm cursor-pointer';
+    } else {
+      a.className = 'admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 text-sm cursor-pointer';
+    }
+  });
+}
+
+function goStep(step) {
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('booking-step' + i).classList.add('hidden');
+    document.getElementById('step' + i + '-dot').className = 'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ' +
+      (i < step ? 'bg-forest-600 text-white' : i === step ? 'bg-forest-600 text-white' : 'bg-gray-200 text-gray-400');
+    if (i < 4) document.getElementById('step' + i + '-bar').style.width = (i < step ? '100%' : '0%');
+  }
+  document.getElementById('booking-step' + step).classList.remove('hidden');
+  document.getElementById('booking-step' + step).classList.add('fade-in');
+  if (step === 4) updateTotal();
+}
+
+function toggleAddon(el, price) {
+  el.classList.toggle('selected');
+  if (el.classList.contains('selected')) {
+    addonTotal += price;
+    el.querySelector('.font-bold').classList.add('text-forest-700');
+  } else {
+    addonTotal -= price;
+  }
+}
+
+function updateTotal() {
+  document.getElementById('addon-total-display').textContent = addonTotal.toLocaleString() + '원';
+  document.getElementById('grand-total').textContent = (basePrice + addonTotal).toLocaleString() + '원';
+}
+
+function showConfirmModal() {
+  const modal = document.getElementById('confirm-modal');
+  modal.style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('confirm-modal').style.display = 'none';
+  showPage('home');
+}
+</script>
+</body>
+</html>

@@ -1,8 +1,9 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-04-06T12:40:57.685Z",
+  "lastUpdated": "2026-04-06T12:53:24.484Z",
   "activeFeatures": [
-    "camping"
+    "camping",
+    "validations"
   ],
   "primaryFeature": "camping",
   "features": {
@@ -15,9 +16,22 @@
       "documents": {},
       "timestamps": {
         "started": "2026-04-06T12:40:57.684Z",
-        "lastUpdated": "2026-04-06T12:40:57.684Z"
+        "lastUpdated": "2026-04-06T12:53:06.988Z"
       },
-      "lastFile": "D:\\개발\\camping\\next.config.ts"
+      "lastFile": "D:\\개발\\camping\\src\\lib\\r2.ts"
+    },
+    "validations": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T12:53:15.122Z",
+        "lastUpdated": "2026-04-06T12:53:24.484Z"
+      },
+      "lastFile": "D:\\개발\\camping\\src\\lib\\validations\\addon.ts"
     }
   },
   "pipeline": {
@@ -28,12 +42,36 @@
   "session": {
     "startedAt": "2026-04-06T09:07:16.987Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-04-06T12:40:57.685Z"
+    "lastActivity": "2026-04-06T12:53:24.484Z"
   },
   "history": [
     {
       "timestamp": "2026-04-06T12:40:57.684Z",
       "feature": "camping",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T12:52:57.069Z",
+      "feature": "camping",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T12:53:06.988Z",
+      "feature": "camping",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T12:53:15.122Z",
+      "feature": "validations",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T12:53:24.484Z",
+      "feature": "validations",
       "phase": "do",
       "action": "updated"
     }
