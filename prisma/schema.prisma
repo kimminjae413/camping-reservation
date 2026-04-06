@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum PriceType {
+  PER_BOOKING
+  PER_PERSON
+  PER_NIGHT
+}
+
+enum ReservationStatus {
+  PENDING_PAYMENT
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model SiteType {
+  id           String   @id @default(cuid())
+  name         String
+  description  String   @db.Text
+  category     String
+  baseCapacity Int
+  maxCapacity  Int
+  amenities    String[]
+  photoKeys    String[]
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("site_types")
+}
+
+model Addon {
+  id          String    @id @default(cuid())
+  name        String
+  description String    @db.Text
+  photoKey    String?
+  price       Int
+  priceType   PriceType
+  maxDailyQty Int
+  category    String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("addons")
+}
+
+model Reservation {
+  id                 String            @id @default(cuid())
+  reservationNumber  String            @unique @default(cuid())
+  checkIn            DateTime          @db.Date
+  checkOut           DateTime          @db.Date
+  status             ReservationStatus @default(PENDING_PAYMENT)
+  basePriceSnapshot  Int?
+  addonPriceSnapshot Int?
+  totalPrice         Int?
+  customerName       String?
+  /// @encrypted
+  customerPhone      String?           @db.Text
+  customerEmail      String?
+  specialRequests    String?           @db.Text
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  @@map("reservations")
+}

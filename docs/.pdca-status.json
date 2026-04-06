@@ -1,0 +1,41 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-04-06T12:40:57.685Z",
+  "activeFeatures": [
+    "camping"
+  ],
+  "primaryFeature": "camping",
+  "features": {
+    "camping": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T12:40:57.684Z",
+        "lastUpdated": "2026-04-06T12:40:57.684Z"
+      },
+      "lastFile": "D:\\개발\\camping\\next.config.ts"
+    }
+  },
+  "pipeline": {
+    "currentPhase": 1,
+    "level": "Dynamic",
+    "phaseHistory": []
+  },
+  "session": {
+    "startedAt": "2026-04-06T09:07:16.987Z",
+    "onboardingCompleted": false,
+    "lastActivity": "2026-04-06T12:40:57.685Z"
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-06T12:40:57.684Z",
+      "feature": "camping",
+      "phase": "do",
+      "action": "updated"
+    }
+  ]
+}
