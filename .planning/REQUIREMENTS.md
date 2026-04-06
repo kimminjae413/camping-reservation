@@ -35,15 +35,15 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Add-On Facilities (부대시설)
 
-- [ ] **ADDON-01**: 관리자가 부대시설 항목(이름, 가격, 사진, 수량, 가격유형)을 등록/수정할 수 있다
-- [ ] **ADDON-02**: 관리자가 부대시설 항목을 활성화/비활성화할 수 있다
+- [x] **ADDON-01**: 관리자가 부대시설 항목(이름, 가격, 사진, 수량, 가격유형)을 등록/수정할 수 있다
+- [x] **ADDON-02**: 관리자가 부대시설 항목을 활성화/비활성화할 수 있다
 - [ ] **ADDON-03**: 부대시설이 일별 재고 수량을 관리한다 (소진 시 자동 비노출)
-- [ ] **ADDON-04**: 부대시설 가격유형을 지원한다 (건당/인당/박당)
+- [x] **ADDON-04**: 부대시설 가격유형을 지원한다 (건당/인당/박당)
 
 ### Admin - Site Management (관리자 - 객실 관리)
 
-- [ ] **SITE-01**: 관리자가 객실 유형(글램핑, 오토캠핑, 카라반 등)을 등록/수정/삭제할 수 있다
-- [ ] **SITE-02**: 관리자가 객실별 사진, 설명, 수용인원, 편의시설을 관리할 수 있다
+- [x] **SITE-01**: 관리자가 객실 유형(글램핑, 오토캠핑, 카라반 등)을 등록/수정/삭제할 수 있다
+- [x] **SITE-02**: 관리자가 객실별 사진, 설명, 수용인원, 편의시설을 관리할 수 있다
 - [ ] **SITE-03**: 관리자가 특정 날짜를 예약 불가로 차단할 수 있다 (정비/휴무)
 - [ ] **SITE-04**: 관리자가 최소 숙박일수를 설정할 수 있다 (주말/성수기 2박 등)
 
@@ -113,11 +113,11 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SITE-01 | Phase 1 | Pending |
-| SITE-02 | Phase 1 | Pending |
-| ADDON-01 | Phase 1 | Pending |
-| ADDON-02 | Phase 1 | Pending |
-| ADDON-04 | Phase 1 | Pending |
+| SITE-01 | Phase 1 | Complete |
+| SITE-02 | Phase 1 | Complete |
+| ADDON-01 | Phase 1 | Complete |
+| ADDON-02 | Phase 1 | Complete |
+| ADDON-04 | Phase 1 | Complete |
 | PRICE-01 | Phase 2 | Pending |
 | PRICE-02 | Phase 2 | Pending |
 | PRICE-03 | Phase 2 | Pending |

@@ -37,7 +37,7 @@
   5. Database schema includes price-snapshot columns, DATE types for check-in/check-out, encrypted phone field, and range-exclusion constraint scaffolding — confirmed via Prisma migration success
 **Plans**: 5 plans
 Plans:
-- [ ] 01-01-PLAN.md — Bootstrap, Prisma schema, R2 client, field encryption
+- [x] 01-01-PLAN.md — Bootstrap, Prisma schema, R2 client, field encryption
 - [ ] 01-02-PLAN.md — Admin auth (JWT cookie, env credentials, middleware, login page)
 - [ ] 01-03-PLAN.md — Admin shell layout (sidebar, route group, dashboard placeholder)
 - [ ] 01-04-PLAN.md — Site type CRUD (API, photo upload, amenities checklist)
