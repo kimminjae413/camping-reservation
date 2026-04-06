@@ -58,7 +58,22 @@ tailwind.config = {
       <span class="nav-link" onclick="showPage('info')">이용안내</span>
       <span class="nav-link" onclick="showPage('admin')">관리자</span>
     </div>
-    <button onclick="showPage('booking')" class="btn-primary text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md">예약하기</button>
+    <div class="flex items-center gap-3">
+      <button onclick="showPage('booking')" class="btn-primary text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md hidden sm:block">예약하기</button>
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-600 hover:text-forest-600" id="mobile-menu-btn">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-earth-100 bg-white/95 backdrop-blur-sm">
+    <div class="flex flex-col px-4 py-3 space-y-1">
+      <span class="nav-link py-3 px-4 rounded-lg hover:bg-forest-50 text-sm font-medium text-gray-600" onclick="showPage('home'); toggleMobileMenu()">홈</span>
+      <span class="nav-link py-3 px-4 rounded-lg hover:bg-forest-50 text-sm font-medium text-gray-600" onclick="showPage('rooms'); toggleMobileMenu()">객실안내</span>
+      <span class="nav-link py-3 px-4 rounded-lg hover:bg-forest-50 text-sm font-medium text-gray-600" onclick="showPage('booking'); toggleMobileMenu()">예약하기</span>
+      <span class="nav-link py-3 px-4 rounded-lg hover:bg-forest-50 text-sm font-medium text-gray-600" onclick="showPage('info'); toggleMobileMenu()">이용안내</span>
+      <span class="nav-link py-3 px-4 rounded-lg hover:bg-forest-50 text-sm font-medium text-gray-600" onclick="showPage('admin'); toggleMobileMenu()">관리자</span>
+    </div>
   </div>
 </nav>
 
@@ -602,6 +617,18 @@ tailwind.config = {
 
 <!-- ==================== ADMIN PAGE ==================== -->
 <div id="page-admin" class="page pt-20">
+  <!-- Mobile Admin Tab Bar -->
+  <div class="md:hidden bg-gray-900 overflow-x-auto sticky top-16 z-40">
+    <div class="flex whitespace-nowrap px-2 py-2 gap-1">
+      <button onclick="showAdminTab('dashboard')" class="admin-mobile-tab px-4 py-2.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 flex-shrink-0" data-tab="dashboard">대시보드</button>
+      <button onclick="showAdminTab('reservations')" class="admin-mobile-tab px-4 py-2.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 flex-shrink-0" data-tab="reservations">예약</button>
+      <button onclick="showAdminTab('sites')" class="admin-mobile-tab px-4 py-2.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 flex-shrink-0" data-tab="sites">객실</button>
+      <button onclick="showAdminTab('addons')" class="admin-mobile-tab px-4 py-2.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 flex-shrink-0" data-tab="addons">부대시설</button>
+      <button onclick="showAdminTab('pricing')" class="admin-mobile-tab px-4 py-2.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 flex-shrink-0" data-tab="pricing">가격</button>
+      <button onclick="showAdminTab('customers')" class="admin-mobile-tab px-4 py-2.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 flex-shrink-0" data-tab="customers">고객</button>
+      <button onclick="showAdminTab('reviews')" class="admin-mobile-tab px-4 py-2.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 flex-shrink-0" data-tab="reviews">리뷰</button>
+    </div>
+  </div>
   <div class="flex min-h-screen">
     <!-- Admin Sidebar -->
     <aside class="w-64 bg-gray-900 text-white p-6 hidden md:block flex-shrink-0">
@@ -640,7 +667,7 @@ tailwind.config = {
     </aside>
 
     <!-- Admin Content Area -->
-    <main class="flex-1 p-8 bg-gray-50 min-h-screen">
+    <main class="flex-1 p-4 md:p-8 bg-gray-50 min-h-screen">
 
       <!-- TAB: Dashboard -->
       <div id="admin-dashboard" class="admin-tab fade-in">
@@ -1066,6 +1093,11 @@ function showPage(page) {
   if (page === 'admin') showAdminTab('dashboard');
 }
 
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('hidden');
+}
+
 function showAdminTab(tab) {
   // Show admin page if not active
   if (!document.getElementById('page-admin').classList.contains('active')) {
@@ -1076,12 +1108,20 @@ function showAdminTab(tab) {
   document.querySelectorAll('.admin-tab').forEach(t => { t.classList.add('hidden'); t.classList.remove('fade-in'); });
   const target = document.getElementById('admin-' + tab);
   if (target) { target.classList.remove('hidden'); target.classList.add('fade-in'); }
-  // Update sidebar active state
+  // Update sidebar active state (desktop)
   document.querySelectorAll('.admin-nav-item').forEach(a => {
     if (a.dataset.tab === tab) {
       a.className = 'admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg bg-forest-700/30 text-forest-300 font-medium text-sm cursor-pointer';
     } else {
       a.className = 'admin-nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 text-sm cursor-pointer';
+    }
+  });
+  // Update mobile tab bar active state
+  document.querySelectorAll('.admin-mobile-tab').forEach(a => {
+    if (a.dataset.tab === tab) {
+      a.className = 'admin-mobile-tab px-4 py-2.5 rounded-lg text-xs font-medium bg-forest-600 text-white flex-shrink-0';
+    } else {
+      a.className = 'admin-mobile-tab px-4 py-2.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-white/10 flex-shrink-0';
     }
   });
 }
