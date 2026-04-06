@@ -35,7 +35,13 @@
   3. Admin can create, edit an add-on item with name, price, photo, max daily quantity, and price type (건당/인당/박당)
   4. Admin can activate or deactivate any add-on item; deactivated items are not visible to customers
   5. Database schema includes price-snapshot columns, DATE types for check-in/check-out, encrypted phone field, and range-exclusion constraint scaffolding — confirmed via Prisma migration success
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 01-01-PLAN.md — Bootstrap, Prisma schema, R2 client, field encryption
+- [ ] 01-02-PLAN.md — Admin auth (JWT cookie, env credentials, middleware, login page)
+- [ ] 01-03-PLAN.md — Admin shell layout (sidebar, route group, dashboard placeholder)
+- [ ] 01-04-PLAN.md — Site type CRUD (API, photo upload, amenities checklist)
+- [ ] 01-05-PLAN.md — Add-on CRUD (API, price types, activation toggle)
 **UI hint**: yes
 
 ### Phase 2: Pricing Engine
@@ -153,7 +159,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/? | Not started | - |
+| 1. Foundation | 0/5 | Planned | - |
 | 2. Pricing Engine | 0/? | Not started | - |
 | 3. Availability Engine | 0/? | Not started | - |
 | 4. Public Booking Flow | 0/? | Not started | - |
