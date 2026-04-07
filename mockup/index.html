@@ -121,6 +121,7 @@ tailwind.config = {
       <span class="nav-link" onclick="showPage('rental')">대관</span>
       <span class="nav-link" onclick="showPage('contact')">문의</span>
       <span class="nav-link text-haven-stone text-xs" onclick="showPage('admin')">관리자</span>
+      <span class="nav-link text-haven-stone" onclick="openLoginModal()">로그인</span>
       <button onclick="showPage('booking')" class="bg-haven-brown text-white px-5 py-2 rounded-none text-xs font-medium tracking-widest uppercase haven-ease-fast hover:bg-haven-dark">RESERVATION</button>
     </div>
 
@@ -148,6 +149,7 @@ tailwind.config = {
     <span class="nav-link py-3 text-sm font-light text-haven-brown tracking-wide" onclick="showPage('rental'); toggleMobileMenu()">대관</span>
     <span class="nav-link py-3 text-sm font-light text-haven-brown tracking-wide" onclick="showPage('contact'); toggleMobileMenu()">문의</span>
     <span class="nav-link py-3 text-xs font-light text-haven-stone tracking-wide" onclick="showPage('admin'); toggleMobileMenu()">관리자</span>
+    <span class="nav-link py-3 text-sm font-light text-haven-brown tracking-wide" onclick="openLoginModal(); toggleMobileMenu()">로그인</span>
     <div class="pt-6">
       <button onclick="showPage('booking'); toggleMobileMenu()" class="w-full bg-haven-brown text-white py-3 rounded-none text-xs font-medium tracking-widest uppercase">RESERVATION</button>
     </div>
@@ -1127,6 +1129,113 @@ tailwind.config = {
 
 
 <!-- ==================== FOOTER ==================== -->
+<!-- ==================== LOGIN MODAL ==================== -->
+<div id="login-modal" class="fixed inset-0 z-[100] hidden">
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeLoginModal()"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[90%] max-w-[420px] p-10 shadow-2xl">
+    <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+
+    <!-- Login Form -->
+    <div id="login-form">
+      <p class="brand-en text-haven-beige text-xs tracking-[0.3em] uppercase mb-2 font-light text-center">The Haven Retreat</p>
+      <h3 class="text-xl font-light text-center text-gray-900 mb-8">로그인</h3>
+      <div class="space-y-4 mb-6">
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1.5 tracking-wide">이메일</label>
+          <input type="email" placeholder="email@example.com" class="w-full border border-gray-200 px-4 py-3 text-sm outline-none focus:border-haven-brown haven-ease-fast">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1.5 tracking-wide">비밀번호</label>
+          <input type="password" placeholder="••••••••" class="w-full border border-gray-200 px-4 py-3 text-sm outline-none focus:border-haven-brown haven-ease-fast">
+        </div>
+      </div>
+      <button onclick="mockLogin()" class="w-full bg-haven-brown text-white py-3.5 text-xs font-medium tracking-widest uppercase haven-ease-fast hover:bg-haven-dark">LOGIN</button>
+      <div class="flex items-center gap-4 my-6">
+        <div class="flex-1 h-px bg-gray-200"></div>
+        <span class="text-xs text-gray-400">또는</span>
+        <div class="flex-1 h-px bg-gray-200"></div>
+      </div>
+      <button class="w-full border border-gray-200 py-3 text-sm text-gray-600 hover:bg-gray-50 haven-ease-fast flex items-center justify-center gap-2 mb-3">
+        <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#FEE500" d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7-.2.7-.7 2.5-.8 2.9-.1.5.2.5.4.3.2-.1 2.6-1.7 3.6-2.4.7.1 1.4.2 2.1.2 5.5 0 10-3.6 10-8 0-4.4-4.5-8-10-8z"/></svg>
+        카카오로 시작하기
+      </button>
+      <div class="text-center mt-6">
+        <span class="text-xs text-gray-400">계정이 없으신가요?</span>
+        <button onclick="showSignup()" class="text-xs text-haven-brown font-medium ml-1 hover:underline">회원가입</button>
+      </div>
+      <div class="text-center mt-2">
+        <button class="text-xs text-gray-400 hover:underline">파트너 로그인</button>
+      </div>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signup-form" class="hidden">
+      <p class="brand-en text-haven-beige text-xs tracking-[0.3em] uppercase mb-2 font-light text-center">The Haven Retreat</p>
+      <h3 class="text-xl font-light text-center text-gray-900 mb-8">회원가입</h3>
+      <div class="space-y-4 mb-6">
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1.5 tracking-wide">이름</label>
+          <input type="text" placeholder="홍길동" class="w-full border border-gray-200 px-4 py-3 text-sm outline-none focus:border-haven-brown haven-ease-fast">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1.5 tracking-wide">이메일</label>
+          <input type="email" placeholder="email@example.com" class="w-full border border-gray-200 px-4 py-3 text-sm outline-none focus:border-haven-brown haven-ease-fast">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1.5 tracking-wide">비밀번호</label>
+          <input type="password" placeholder="8자 이상" class="w-full border border-gray-200 px-4 py-3 text-sm outline-none focus:border-haven-brown haven-ease-fast">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1.5 tracking-wide">연락처</label>
+          <input type="tel" placeholder="010-0000-0000" class="w-full border border-gray-200 px-4 py-3 text-sm outline-none focus:border-haven-brown haven-ease-fast">
+        </div>
+        <label class="flex items-start gap-2 cursor-pointer">
+          <input type="checkbox" class="mt-1 accent-haven-brown">
+          <span class="text-xs text-gray-500">개인정보 수집 및 이용에 동의합니다. <span class="text-haven-brown underline">약관 보기</span></span>
+        </label>
+      </div>
+      <button onclick="alert('회원가입 기능은 준비 중입니다.'); closeLoginModal();" class="w-full bg-haven-brown text-white py-3.5 text-xs font-medium tracking-widest uppercase haven-ease-fast hover:bg-haven-dark">SIGN UP</button>
+      <div class="text-center mt-6">
+        <span class="text-xs text-gray-400">이미 계정이 있으신가요?</span>
+        <button onclick="showLoginForm()" class="text-xs text-haven-brown font-medium ml-1 hover:underline">로그인</button>
+      </div>
+    </div>
+
+    <!-- My Page (after login) -->
+    <div id="mypage-form" class="hidden">
+      <p class="brand-en text-haven-beige text-xs tracking-[0.3em] uppercase mb-2 font-light text-center">My Page</p>
+      <h3 class="text-xl font-light text-center text-gray-900 mb-8">마이페이지</h3>
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 bg-haven-cream rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg class="w-8 h-8 text-haven-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        </div>
+        <p class="font-medium text-gray-900">홍길동 님</p>
+        <p class="text-xs text-gray-400 mt-1">일반회원</p>
+      </div>
+      <div class="space-y-2 mb-6">
+        <button class="w-full text-left px-4 py-3 border border-gray-100 text-sm text-gray-700 hover:bg-haven-cream haven-ease-fast flex justify-between items-center">
+          <span>개인정보 수정</span><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button class="w-full text-left px-4 py-3 border border-gray-100 text-sm text-gray-700 hover:bg-haven-cream haven-ease-fast flex justify-between items-center">
+          <span>결제수단 관리</span><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button class="w-full text-left px-4 py-3 border border-gray-100 text-sm text-gray-700 hover:bg-haven-cream haven-ease-fast flex justify-between items-center">
+          <span>적립금 / 쿠폰</span><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button class="w-full text-left px-4 py-3 border border-gray-100 text-sm text-gray-700 hover:bg-haven-cream haven-ease-fast flex justify-between items-center">
+          <span>예약 내역</span><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button class="w-full text-left px-4 py-3 border border-gray-100 text-sm text-gray-700 hover:bg-haven-cream haven-ease-fast flex justify-between items-center">
+          <span>1:1 문의</span><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <button onclick="mockLogout()" class="w-full border border-gray-200 py-3 text-xs text-gray-500 tracking-widest uppercase hover:bg-gray-50 haven-ease-fast">LOGOUT</button>
+    </div>
+  </div>
+</div>
+
 <footer class="bg-haven-dark text-gray-400 py-16">
   <div class="max-w-[1280px] mx-auto px-6">
     <div class="text-center mb-10">
@@ -1170,6 +1279,55 @@ function showPage(page) {
 }
 
 // ==================== MOBILE MENU ====================
+// ─── Login / Signup / MyPage ───
+let isLoggedIn = false;
+
+function openLoginModal() {
+  document.getElementById('login-modal').classList.remove('hidden');
+  if (isLoggedIn) {
+    document.getElementById('login-form').classList.add('hidden');
+    document.getElementById('signup-form').classList.add('hidden');
+    document.getElementById('mypage-form').classList.remove('hidden');
+  } else {
+    showLoginForm();
+  }
+}
+
+function closeLoginModal() {
+  document.getElementById('login-modal').classList.add('hidden');
+}
+
+function showLoginForm() {
+  document.getElementById('login-form').classList.remove('hidden');
+  document.getElementById('signup-form').classList.add('hidden');
+  document.getElementById('mypage-form').classList.add('hidden');
+}
+
+function showSignup() {
+  document.getElementById('login-form').classList.add('hidden');
+  document.getElementById('signup-form').classList.remove('hidden');
+  document.getElementById('mypage-form').classList.add('hidden');
+}
+
+function mockLogin() {
+  isLoggedIn = true;
+  // Update nav button
+  document.querySelectorAll('[onclick="openLoginModal()"]').forEach(el => {
+    el.textContent = '마이페이지';
+  });
+  closeLoginModal();
+  alert('로그인되었습니다. (목업)');
+}
+
+function mockLogout() {
+  isLoggedIn = false;
+  document.querySelectorAll('[onclick="openLoginModal()"]').forEach(el => {
+    el.textContent = '로그인';
+  });
+  closeLoginModal();
+  alert('로그아웃되었습니다.');
+}
+
 function toggleMobileMenu() {
   const menu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('mobile-overlay');
