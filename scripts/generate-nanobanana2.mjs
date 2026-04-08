@@ -49,9 +49,19 @@ CRITICAL REQUIREMENTS:
 - Modern concrete management building may be visible in background.
 - Concrete pathways connecting sites, grass strips as borders between sites.
 - Style: Natural, authentic Korean mountain auto-camping — NOT luxury glamping, NOT staged, NOT resort-like.
-- Camera: Professional DSLR quality, natural true-to-life colors, no over-saturation.
-- NO AI artifacts. Photorealistic. High resolution.
-- PRESERVE the exact background mountains, terrain, and structures from the reference photo. Only ADD camping elements to the existing scene.`;
+- Camera: Shot on Canon EOS R5 or Sony A7IV DSLR. Professional photography quality with natural bokeh, realistic depth of field, true-to-life colors. The image MUST look like an actual photograph, not AI-generated.
+- NO AI artifacts. Photorealistic. High resolution. Natural film grain.
+- PRESERVE the exact background mountains, terrain, and structures from the reference photo. Only ADD camping elements to the existing scene.
+
+CRITICAL SIZE REFERENCES (must be realistic):
+- A standard camping tent (2-3 person dome) is approximately 210cm wide × 210cm long × 130cm tall — about 75% of an adult human's height
+- A family tent (4 person) is approximately 260cm × 260cm × 170cm — about as tall as a person
+- A living shell / tunnel tent is approximately 300cm × 500cm × 200cm — taller than a person, a person can stand inside
+- A camping chair seat height is about 35-40cm (knee height of an adult)
+- A camping table is about 60-70cm tall (waist height of an adult)
+- A wooden deck platform is approximately 3.5m × 3.5m — a tent should occupy about 60-70% of the deck area
+- Use nearby structures (concrete walls ~1.5m, pathway width ~1.5m, trees) as scale references to ensure tent size is REALISTIC
+- Tents must NEVER appear smaller than a human would expect — if in doubt, make them LARGER`;
 
 // ─── 데크존 공통 ───
 const DECK_ZONE = `
@@ -86,13 +96,15 @@ const imagePrompts = {
     originFile: "KakaoTalk_20260406_230249446_04.jpg",
     prompt: `Using the reference photo as the EXACT background setting, add a natural auto-camping scene to this deck zone.
 
-Place ONE personal dome tent (beige/sand colored, medium size, like a Snowpeak Amenity Dome) on the nearest wooden deck platform. Next to the tent: a small folding camping table with a thermos and cups, two lightweight camping chairs.
+Place ONE full-size 3-4 person dome tent (beige/sand colored, like Snowpeak Amenity Dome L — approximately 260cm wide × 260cm deep × 170cm tall, almost as tall as an adult person) on the nearest wooden deck platform. The tent should occupy about 60-70% of the deck surface. Next to the tent on the deck: a camping folding table (60cm tall, waist-height of an adult) with a thermos and cups, two full-size camping chairs (seat height 40cm, adult knee height).
+
+SIZE CHECK: The tent ridge height should be roughly equal to the concrete wall height (~1.5m) visible in the scene. Camping chairs should reach about knee-height of an imaginary standing adult.
 
 The neighboring deck platforms should be COMPLETELY EMPTY — showing this is a spacious campsite with plenty of room.
 
-Far in the background (2-3 sites away), show ONE different-colored tent (olive green, smaller) barely visible — suggesting other campers but far apart.
+Far in the background (2-3 sites away), show ONE different-colored tent (olive green) — properly sized even at distance.
 
-Bright sunny day, blue sky with a few white clouds. Shot on Canon EOS R5, 24mm wide-angle lens, f/8. Natural daylight, no dramatic color grading.
+Bright sunny day, blue sky with a few white clouds. Shot on Canon EOS R5, 24mm wide-angle lens, f/8. Natural daylight, DSLR depth of field with slight background blur.
 ${DECK_ZONE}${COMMON_STYLE}`
   },
 
@@ -127,11 +139,13 @@ ${DECK_ZONE}${COMMON_STYLE}`
     originFile: "KakaoTalk_20260406_230249446_11.jpg",
     prompt: `Using the reference photo's pathway and mountain view as the EXACT setting, create a peaceful morning camping lifestyle shot.
 
-On the nearest wooden deck: ONE compact dome tent (sage green color) with the rain fly partially rolled back. A camper's chair faces the mountain view. A small table holds a pour-over coffee dripper and enamel mug — morning coffee ritual.
+On the nearest wooden deck: ONE full-size 2-3 person dome tent (sage green color, approximately 210cm × 210cm × 130cm — large enough for adults to sleep inside comfortably) with the rain fly partially rolled back. The tent should fill about half the deck platform. A full-size Helinox camping chair (seat 40cm high) faces the mountain view. A camping side table (50cm tall) holds a pour-over coffee dripper and enamel mug — morning coffee ritual.
+
+SIZE CHECK: The tent should be clearly large enough for 2 adults to sleep inside. The chair should be a proper adult-sized camping chair, not a miniature. Compare to the pathway width (~1.5m) for scale.
 
 The pathway is clean and inviting. Other deck sites in the background are empty. Fresh morning light, slight mist on the distant mountains. Dewy grass. The feeling: quiet early morning at a mountain campsite before other campers wake up.
 
-Shot on Fujifilm X-T5, 35mm f/2.0 lens. Natural soft morning colors, no heavy editing.
+Shot on Fujifilm X-T5, 35mm f/2.0 lens, f/2.8. Beautiful DSLR bokeh on background. Natural soft morning colors, realistic film-like quality.
 ${DECK_ZONE}${COMMON_STYLE}`
   },
 
@@ -204,16 +218,17 @@ ${GRAVEL_ZONE}${COMMON_STYLE}`
     originFile: "KakaoTalk_20260406_230249446_10.jpg",
     prompt: `Using this elevated/overview reference photo as the EXACT background, add scattered camping activity to show the campsite in use but NOT crowded.
 
-Add 2-3 tents TOTAL scattered across the visible sites — each a DIFFERENT style and color:
-1. On a deck: a beige dome tent (far left area)
-2. On gravel: an olive A-frame tent (middle-right area)
-3. On a deck: a khaki tunnel tent (far area, small)
+Add 2-3 FULL-SIZE tents scattered across the visible sites — each a DIFFERENT style and color:
+1. On a deck: a beige 4-person dome tent (260cm × 260cm × 170cm — occupies most of the deck platform)
+2. On another deck: a khaki tunnel tent (300cm × 500cm × 200cm — clearly large, an adult can stand inside)
+
+CRITICAL SIZE: Even though this is an overview/wide shot, the tents must be REALISTICALLY SIZED relative to the deck platforms and pathways. A tent should visually fill 50-70% of a deck platform. Do NOT make tents look like tiny dots or miniatures. Each tent has camping chairs and a table next to it — these should also be visible and properly sized.
 
 All other sites remain EMPTY. The spacing between occupied sites should be large — at least 2-3 empty sites between each tent.
 
-Each tent has a small personal setup (table, chairs) but these are tiny in the overview shot. The concrete building, pathways, and mountain surroundings must match the reference exactly.
+The concrete building, pathways, and mountain surroundings must match the reference exactly.
 
-Bright daytime, natural light. Shot on Canon EOS R5, 24mm wide-angle, f/11 for maximum sharpness across the scene.
+Bright daytime. Shot on Canon EOS R5, 24mm wide-angle, f/8. Professional DSLR landscape photography quality.
 ${COMMON_STYLE}`
   },
 
@@ -224,11 +239,11 @@ ${COMMON_STYLE}`
 
 The concrete building should remain the primary subject — clean, modern architecture against the mountains.
 
-In the background/distance behind the building, ONE or TWO tents should be barely visible on the camping sites — suggesting the campsite is active but not the focus. Small, subtle — perhaps just tent peaks visible above a wall or through a gap.
+In the mid-ground behind/beside the building, show ONE clearly visible full-size family tent (4-person, beige/khaki, ~260cm × 260cm × 170cm) set up on a deck or gravel site. The tent should be clearly recognizable as a real camping tent — NOT a tiny dot. Next to it: visible camping chairs and a table. A second tent (different color) can be partially visible further away.
 
-Golden hour warm light on the concrete building, making it look warm and inviting. Mountains behind with atmospheric depth. The building should feel like a welcoming campsite reception/facility.
+Golden hour warm light on the concrete building, making it look warm and inviting. Mountains behind with atmospheric depth. The building should feel like a welcoming campsite reception/facility with active camping behind it.
 
-Shot on Sony A7IV, 35mm f/2.0 lens. Architectural photography style with camping context.
+Shot on Sony A7IV, 35mm f/2.0 lens, f/4. Professional DSLR architectural photography with natural bokeh. Realistic depth and scale.
 ${COMMON_STYLE}`
   }
 };
