@@ -41,8 +41,30 @@ tailwind.config = {
 
   /* Hero */
   .hero-bg {
-    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.5) 100%),
-    url('../images/nanobanana2/hero_forest_relax.jpg') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+  }
+  .hero-bg video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 0;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.5) 100%);
+    z-index: 1;
+  }
+  .hero-bg > *:not(video) {
+    position: relative;
+    z-index: 2;
   }
 
   /* Nav */
@@ -171,7 +193,9 @@ tailwind.config = {
 
   <!-- Section 1: Hero -->
   <section class="hero-bg h-screen flex items-center justify-center text-center text-white relative">
-    <div class="absolute top-20 left-1/2 -translate-x-1/2 bg-black/40 backdrop-blur-sm text-white/70 text-[11px] px-4 py-1.5 rounded-full tracking-wider z-10 border border-white/10">* 향후 영상으로 교체 예정</div>
+    <video autoplay muted loop playsinline poster="../images/nanobanana2/hero_forest_relax.jpg">
+      <source src="../images/hero_video.mp4" type="video/mp4">
+    </video>
     <div class="max-w-2xl px-6 fade-in">
       <h1 class="brand-en text-5xl md:text-7xl font-light leading-[1.1] mb-6 tracking-tight">
         THE HAVEN<br>RETREAT
